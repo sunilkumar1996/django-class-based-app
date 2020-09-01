@@ -1,0 +1,62 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="text-center alert alert-primary">Create Contractor Here</h4>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}}
+                    {{fm}}
+                    {{fm.errors|striptags}}
+                {% endfor %}
+                <input class="btn btn-success mt-3" type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-sm-8">
+            <h4 class="text-center alert alert-primary">Contractor Here</h4>
+            {% if contractors %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contractor in contractors %}
+                            <tr>
+                                <td>{{contractor.id}}</td>
+                                <td>{{contractor.name}}</td>
+                                <td>{{contractor.age}}</td>
+                                <td>{{contractor.date}}</td>
+                                <td>{{contractor.payment}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-info" href="{% url 'contractoredit' contractor.id %}">Edit</a>
+                                    <a class="btn btn-sm btn-danger ml-2" href="{% url 'contractordelete' contractor.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h5 class="text-center alert alert-danger">No Records</h5>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

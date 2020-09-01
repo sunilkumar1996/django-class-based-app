@@ -1,0 +1,3 @@
+# django-class-based-app
+
+
