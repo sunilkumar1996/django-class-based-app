@@ -4,6 +4,13 @@ from .models import Student, Teacher, Contractor
 from django.views import View
 from django.contrib import messages
 
+# This is Home Page View in Class based
+class HomePageView(View):
+    def get(self, request):
+        # students = Student.objects.filter(Student).order_by('-fees')[:2]
+        students = Student.objects.all().order_by('-id')[:2]
+        return render(request, 'school/home.html', {'students': students})
+
 
 # Class based View and Only Student View
 class StudentView(View):
